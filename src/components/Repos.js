@@ -5,16 +5,17 @@ import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
 const Repos = () => {
   const { repos } = React.useContext(GithubContext);
  
+  // iterating over the repos array
   let languages = repos.reduce((total, item) => {
     const { language } = item;
 
-    //in case of language as 'null'
+    // in case of language as 'null'
     if(!language) return total; 
 
     // check if the language property is already on the object
     if(!total[language]) {
       // if it´s not, create a new one as an object
-      total[language] = {label:language, value:1}
+      total[language] = { label: language, value: 1 }
     } else {
       // if language is already on the object, keep the same instance and just add + 1 to the value
       total[language] = {
@@ -25,7 +26,15 @@ const Repos = () => {
 
     return total;
   }, {});
-
+  
+  // turning the object into an array and sorting by the most used language
+  languages = Object.values(languages).sort((a, b) => {
+    return (
+      // this is guarantee to always have the highest value language first
+      b.value - a.value
+    )
+    // getting only the first 5 items from the array
+  }).slice(0, 5);
   
   const chartData = [
   {
@@ -45,7 +54,7 @@ const Repos = () => {
   return (
     <section className="section">  
       <Wrapper className="section-center">
-        <Pie3D data={chartData} />
+        <Pie3D data={languages} />
         {/* <ExampleChart data={chartData}/> */}
 
       </Wrapper>
