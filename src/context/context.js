@@ -61,7 +61,7 @@ const GithubProvider = ({children}) => {
     .then(({data}) => {
       let { rate: {remaining} } = data;
       setRequests(remaining);
-      console.log(remaining)
+      
       if (remaining === 0) {
         // throw an error
         toggleError(true, "sorry, you've exeeded your hourly rate limit!");
