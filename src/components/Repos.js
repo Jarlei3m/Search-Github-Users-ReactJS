@@ -7,20 +7,21 @@ const Repos = () => {
  
   // iterating over the repos array
   let languages = repos.reduce((total, item) => {
-    const { language } = item;
+    const { language, stargazers_count } = item;
 
     // in case of language as 'null'
     if(!language) return total; 
 
-    // check if the language property is already on the object
+    // check if the language and stargazers_count properties is already on the object
     if(!total[language]) {
       // if it´s not, create a new one as an object
-      total[language] = { label: language, value: 1 }
+      total[language] = { label: language, value: 1, stars: stargazers_count }
     } else {
-      // if language is already on the object, keep the same instance and just add + 1 to the value
+      // if language/stargazers_count is already on the object, keep the same instance and just add + 1 to the value, and the stargazers_count to the stars
       total[language] = {
         ...total[language], 
-        value: total[language].value + 1
+        value: total[language].value + 1,
+        stars: total[language].stars + stargazers_count
       };
     };
 
@@ -28,13 +29,26 @@ const Repos = () => {
   }, {});
   
   // turning the object into an array and sorting by the most used language
-  languages = Object.values(languages).sort((a, b) => {
-    return (
-      // this is guarantee to always have the highest value language first
-      b.value - a.value
-    )
-    // getting only the first 5 items from the array
-  }).slice(0, 5);
+  const mostUsed = Object.values(languages)
+    .sort((a, b) => {
+      return (
+        // this is guarantee to always have the highest value language first
+        b.value - a.value
+      )
+      // getting only the first 5 items from the array
+    }).slice(0, 5);
+
+  // most stars per language
+  const mostPopular = Object.values(languages)
+    .sort((a, b) => {
+      return (
+        b.stars - a.stars
+      )
+      // since charts are looking for 'value' property, we need to flip then: 'stars' to 'value'
+    }).map((item) => {
+      // for each item overwrite the 'value' with item.stars
+      return {...item, value: item.stars}
+    }).slice(0, 5);
   
   const chartData = [
   {
@@ -54,9 +68,9 @@ const Repos = () => {
   return (
     <section className="section">  
       <Wrapper className="section-center">
-        <Pie3D data={languages} />
+        <Pie3D data={mostUsed} />
         <div></div>
-        <Doughnut2D data={chartData}/>
+        <Doughnut2D data={mostPopular}/>
         <div></div>
 
       </Wrapper>
