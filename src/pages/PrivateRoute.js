@@ -6,8 +6,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 // need to have access to 'chidren' because the dashboard will be a child of 'PrivateRoute'
 // '...rest' collect the rest of the props that are in my component, whatever they are
 const PrivateRoute = ({ children, ...rest }) => {
-  const {isAuthenticate, user} = useAuth0()
-  const isUser = isAuthenticate && user;
+  const { isAuthenticated, user } = useAuth0();
+  console.log(isAuthenticated, user)
+  const isUser = isAuthenticated && user;
+  console.log(isUser)
 
   return (
     // spreading out the props on the Route {...rest}, placing in the Rout that i'm returning
