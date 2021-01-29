@@ -34,7 +34,7 @@
 
 ![App Gif](https://github.com/Jarlei3m/Search-Github-Users-ReactJS/blob/master/src/images/search-github-gif.gif)
 <p align="center">
-  <a href="https://app-quiz-reactjs.netlify.app/" target="_blank">
+  <a href="https://search-github-users-metrics.netlify.app/" target="_blank">
     <img alt="Demo on Netlify" src="https://github.com/Jarlei3m/Search-Github-Users-ReactJS/blob/master/src/images/demo_on_netlify.png">
   </a>
 </p>
